@@ -24,24 +24,17 @@ export class DialogComponent implements OnInit, OnDestroy {
     public ds: DateService,
     public ws: WindowService) {
       this.data = data;
-      console.log(this.data);
-      console.log(ds.day)
   }
 
   ngOnInit() {
     this.subs.push(this._dls.dialogError$.subscribe(error => this.dialogError = error));
     this.subs.push(this._dls.disableSubmit$.subscribe(disable => this.disableSubmit = disable));
     this.subs.push(this._dls.confirm$.subscribe(args => this.continue(args.continue, args.data)));
-    // this.subs.push(this._dls.close$.subscribe(data => this.closeDialog(data)));
   }
 
   ngOnDestroy() {
     this.subs.forEach(s => s.unsubscribe());
   }
-
-  // closeDialog(data: any) {
-  //   this.dialogRef.closeAll(data);
-  // }
 
   continue(continueAction: boolean, args?: any) {
     const data: any = args ? Object.assign({}, { continue: continueAction }, args) : { continue: continueAction };

@@ -10,7 +10,7 @@ export class DayPipe implements PipeTransform {
     if(momentFormat && moment.isMoment(value)) {
       return value.format('M/DD/YY');
     } else if(typeof value === 'string') {
-      let dayRef: any = {
+      const dayRef: Record<string, unknown> = {
         Monday: 'Mon',
         Tuesday: 'Tue',
         Wednesday: 'Wed',

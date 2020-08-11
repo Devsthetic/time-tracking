@@ -1,55 +1,66 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Profile, TimeEntry, TimeCode } from '@models';
-import { Observable, Subscription, Subject, of } from 'rxjs';
-import * as moment from 'moment';
-import { filter, map } from 'rxjs/operators';
+import { TimeEntry, TimeCode, Department } from '@models';
+import { Observable } from 'rxjs';
+import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class TimeService {
+    /* TODO: split non-time crud operations to new service */
 
-  private API_URL = 'http://localhost:8000/api/';
+    constructor(private http: HttpClient) {}
 
-  /* TODO: split non-ime crud operations to new service */
+    getAllTime(id: number): Observable<TimeEntry[]> {
+        return this.http.get<TimeEntry[]>(`${environment.api}time/id/${id}`);
+    }
 
-  constructor(private http: HttpClient) {}
+    getAllTimeByDate(date: string): Observable<TimeEntry[]> {
+        return this.http.get<TimeEntry[]>(
+            `${environment.api}time/date/all/${date}`
+        );
+    }
 
-  getAllTime(id: any): Observable<TimeEntry[]> {
-    return this.http.get<TimeEntry[]>(this.API_URL+'time/id/'+id);
-  }
+    getAllTimeByPeriod(
+        startDate: string,
+        endDate: string
+    ): Observable<TimeEntry[]> {
+        return this.http.get<TimeEntry[]>(
+            `${environment.api}time/period/start/${startDate}/end/${endDate}`
+        );
+    }
 
-  getAllTimeByDate(date: string): Observable<TimeEntry[]> {
-    return this.http.get<TimeEntry[]>(this.API_URL+'time/date/all/'+date);
-  }
+    getTimeByDate(id: number, date: string): Observable<TimeEntry[]> {
+        return this.http.get<TimeEntry[]>(
+            `${environment.api}time/id/${id}/date/${date}`
+        );
+    }
 
-  getAllTimeByPeriod(startDate: string, endDate: string): Observable<TimeEntry[]> {
-    return this.http.get<TimeEntry[]>(this.API_URL+'time/period/start/'+startDate+'/end/'+endDate);
-  }
+    getTimeByPeriod(
+        id: number,
+        startDate: string,
+        endDate: string
+    ): Observable<TimeEntry[]> {
+        return this.http.get<TimeEntry[]>(
+            `${environment.api}time/id/${id}/start/${startDate}/end/${endDate}`
+        );
+    }
 
-  getTimeByDate(id: any, date: string): Observable<TimeEntry[]> {
-    return this.http.get<TimeEntry[]>(this.API_URL+'time/id/'+id+'/date/'+date);
-  }
+    getTimeCodes(): Observable<TimeCode[]> {
+        return this.http.get<TimeCode[]>(`${environment.api}time/codes`);
+    }
 
-  getTimeByPeriod(id: any, startDate: string, endDate: string): Observable<TimeEntry[]> {
-    return this.http.get<TimeEntry[]>(this.API_URL+'time/id/'+id+'/start/'+startDate+'/end/'+endDate);
-  }
+    getAllDepartments(): Observable<Department[]> {
+        return this.http.get<Department[]>(`${environment.api}dept`);
+    }
 
-  getTimeCodes(): Observable<TimeCode[]> {
-    return this.http.get<TimeCode[]>(this.API_URL+'time/codes');
-  }
+    getDepartment(id: number): Observable<Department> {
+        console.log('called get department');
+        return this.http.get<Department>(`${environment.api}dept/id/${id}`);
+    }
 
-  getAllDepartments(): Observable<any[]> {
-    return this.http.get<any[]>(this.API_URL+'departments');
-  }
-
-  getDepartment(id: string): Observable<any> {
-    return this.http.get<any>(this.API_URL+'department/id/'+id);
-  }
-
-  setTimeByDate(entry: TimeEntry): Observable<any> {
-    return this.http.post<any>(this.API_URL+'/time', entry);
-  }
-
+    setTimeByDate(entry: TimeEntry): Observable<TimeEntry> {
+        return this.http.post<TimeEntry>(`${environment.api}/time}`, entry);
+    }
 }

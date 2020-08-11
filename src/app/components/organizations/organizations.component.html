@@ -1,0 +1,111 @@
+<div class="page-header card">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="icofont icofont-company bg-c-pink"></i>
+                <div class="d-inline">
+                    <h4>Organizations</h4>
+                    <span>CRUD operations for Blue Sky Organizations</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4">
+            <div class="page-header-breadcrumb">
+                <ul class="breadcrumb-title">
+                    <li class="breadcrumb-item">
+                      <a [routerLink]="['/admin/organizations/create']"><i class="icofont icofont-plus"></i> Add Organization</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Zero config.table start -->
+            <div class="card" *ngIf="pagedOrgs">
+                <div class="card-block">
+                    <div class="dt-responsive table-responsive">
+                        <div id="simpletable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                          <div *ngIf="pagedOrgs.length" class="row pad-0">
+                            <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+                              <div class="dataTables_length form-inline tableOptions" id="simpletable_length">
+                                <label class="my-1 mr-2" for="perPage">Show</label>
+                                <select *ngIf="pagination && pagination.viewOptions.length" id="perPage" name="simpletable_length" aria-controls="simpletable" class="form-control input-sm" [(ngModel)]="pagination.numberPerPage" (change)="setNumberPerPage()">
+                                  <option *ngFor="let opt of pagination.viewOptions" [value]="opt">{{ opt }}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                              <div id="simpletable_filter" class="dataTables_filter form-inline">
+                                <label class="sr-only" for="filter">Filter Users</label>
+                                <input #filter id="filter" type="search" class="form-control input-sm" placeholder="Any Column" aria-controls="simpletable" (keydown)="filterTable($event.target.value)">
+                                <button class="btn btn-primary m-b-0" [class.disabled]="!filter" (click)="filterTable(null)">Clear</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row pad-0">
+                            <div class="col-xs-12 col-sm-12 pad-0">
+                              <table id="simpletable" class="table table-striped table-bordered nowrap dataTable" role="grid" aria-describedby="simpletable_info">
+                                <thead>
+                                <tr role="row">
+                                  <th class="sorting_asc" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending">ID</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Organization: activate to sort column ascending">Phone</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Email</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Map: activate to sort column ascending">Map</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Active Date: activate to sort column ascending">Added</th></tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let o of pagedOrgs; let i = index" role="row" [class.odd]="i%2 === false" [routerLink]="['/admin/organization/'+o.id]">
+                                      <td>{{ o.id }}</td>
+                                      <td>{{ o.name }}</td>
+                                      <td>{{ o.phone }}</td>
+                                      <td>{{ o.email }}</td>
+                                      <td>{{ o.lat }}, {{ o.lng }}</td>
+                                      <td>{{ o.createDate | momentDate}}</td>
+                                  </tr>
+                                  <tr *ngIf="!pagedOrgs.length" class="odd empty">
+                                    <td colspan="6" class="txt-ctr">No Data</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div class="row pad-0">
+                            <div class="col-xs-12 col-sm-12 col-md-5">
+                              <div class="dataTables_info" role="status" aria-live="polite">
+                                Showing {{ pagination.firstRecord }} to {{ pagination.lastRecord }} of {{ orgs.length }}
+                              </div>
+                            </div>
+                            <div *ngIf="pagedOrgs.length && pagination.totalPages && pagination.totalPages > 1" class="col-xs-12 col-sm-12 col-md-7">
+                              <div class="dataTables_paginate paging_simple_numbers">
+                                <ul class="pagination">
+                                  <li *ngIf="pagination.previousPage" class="paginate_button page-item previous" [class.disabled]="!pagination.previousPage">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link" (click)="setPage(pagination.previousPage)">Previous</a>
+                                  </li>
+                                  <li *ngIf="pagination.previousPage" class="paginate_button page-item">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link" (click)="setPage(pagination.previousPage)">{{ pagination.previousPage }}</a>
+                                  </li>
+                                  <li *ngIf="pagination.currentPage" class="paginate_button page-item active">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link">{{ pagination.currentPage }}</a>
+                                  </li>
+                                  <li *ngIf="pagination.nextPage" class="paginate_button page-item">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link" (click)="setPage(pagination.nextPage)">{{ pagination.nextPage }}</a>
+                                  </li>
+                                  <li *ngIf="pagination.nextPage" class="paginate_button page-item next" [class.disabled]="!pagination.nextPage">
+                                    <a aria-controls="simpletable" data-dt-idx="3" tabindex="0" class="page-link" (click)="setPage(pagination.nextPage)">Next</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Zero config.table end -->
+        </div>
+    </div>
+</div>

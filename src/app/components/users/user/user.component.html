@@ -1,0 +1,284 @@
+<div *ngIf="user" class="page-header card">
+  <div class="row align-items-end">
+    <div class="col-lg-8">
+      <div class="page-header-title">
+        <i class="icofont icofont-ui-user bg-c-green"></i>
+        <div class="d-inline">
+          <h4>{{ user.firstName }} {{ user.lastName }}</h4>
+          <span *ngIf="user.organizationName">{{ user.organizationName }}</span>
+          <span *ngIf="user.organizationName && user.groupName" class="network-divider"> | </span>
+          <span *ngIf="user.groupName">{{ user.groupName }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="user" class="page-body">
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-header-text">Profile</h5>
+          <button id="edit-btn" type="button" class="btn btn-sm btn-primary waves-effect waves-light f-right">
+            <i class="icofont icofont-edit"></i>
+          </button>
+        </div>
+        <div class="card-block">
+          <div class="view-info">
+            <div class="row">
+              <div class="col-lg-12">
+                <div class="general-info">
+                  <div class="row">
+                    <div class="col-lg-12 col-xl-6">
+                      <div class="table-responsive">
+                        <table class="table m-0">
+                          <tbody>
+                            <tr>
+                              <th scope="row">Name</th>
+                              <td>{{ user.firstName }} {{ user.lastName }}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Location</th>
+                              <td>{{ user.city }}, {{ user.state }}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Organization</th>
+                              <td>{{ user.organizationName || 'N/A' }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- end of table col-lg-6 -->
+                    <div class="col-lg-12 col-xl-6">
+                      <div class="table-responsive">
+                        <table class="table">
+                          <tbody>
+                            <tr>
+                              <th scope="row">Email</th>
+                              <td><a>{{ user.email }}</a></td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Phone</th>
+                              <td>{{ user.phone }}</td>
+                            </tr>
+                            <tr>
+                              <th scope="row">Group</th>
+                              <td>{{ user.groupName || 'N/A' }}</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <!-- end of table col-lg-6 -->
+                  </div>
+                  <!-- end of row -->
+                </div>
+                <!-- end of general info -->
+              </div>
+              <!-- end of col-lg-12 -->
+            </div>
+            <!-- end of row -->
+          </div>
+          <!-- end of view-info -->
+          </div>
+        <!-- end of card-block -->
+      </div>
+      <div class="row">
+        <div class="col-xl-3">
+          <!-- user contact card left side start -->
+          <div class="card">
+            <div class="card-block groups-contact">
+              <ul class="list-group">
+                <li class="list-group-item justify-content-between btn-hvr" (click)="activeTable = 'org'">
+                  Organization
+                  <span class="badge badge-primary badge-pill">{{ orgUsers.length }}</span>
+                </li>
+                <li class="list-group-item justify-content-between btn-hvr" (click)="activeTable = 'group'">
+                  Group
+                  <span class="badge badge-success badge-pill">{{ groupUsers.length }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- user contact card left side end -->
+        </div>
+        <div class="col-xl-9">
+          <div class="row">
+            <div class="col-sm-12">
+              <!-- contact data table card start -->
+
+              <div class="card" *ngIf="orgUsers && activeTable === 'org'">
+                <div class="card-header">
+                    <h5>{{ user.organizationName }}</h5>
+                </div>
+                  <div class="card-block">
+                      <div class="dt-responsive table-responsive">
+                          <div id="simpletable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                            <div *ngIf="orgUsers.length" class="row pad-0">
+                              <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+                                <div class="dataTables_length form-inline tableOptions" id="simpletable_length">
+                                  <label class="my-1 mr-2" for="perPage">Show</label>
+                                  <select *ngIf="orgPagination && orgPagination.viewOptions.length" id="perPage" name="simpletable_length" aria-controls="simpletable" class="form-control input-sm" [(ngModel)]="orgPagination.numberPerPage" (change)="setNumberPerPage()">
+                                    <option *ngFor="let opt of orgPagination.viewOptions" [value]="opt">{{ opt }}</option>
+                                  </select>
+                                </div>
+                              </div>
+                              <div class="col-xs-12 col-sm-12 col-md-6">
+                                <div id="simpletable_filter" class="dataTables_filter form-inline">
+                                  <label class="sr-only" for="filter">Filter Users</label>
+                                  <input #filter id="filter" type="search" class="form-control input-sm" placeholder="Any Column" aria-controls="simpletable" (keyup)="filterTable('org', $event.target.value)"  [value]="orgFilter || null">
+                                  <button class="btn btn-primary m-b-0" [class.disabled]="!orgFilter" (click)="filterTable('org', null)">Clear</button>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="row pad-0">
+                              <div class="col-xs-12 col-sm-12 pad-0">
+                                <table id="simpletable" class="table table-striped table-bordered nowrap dataTable" role="grid" aria-describedby="simpletable_info">
+                                  <thead>
+                                  <tr role="row">
+                                    <th class="sorting_asc" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending">ID</th>
+                                    <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+                                    <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Email</th>
+                                    <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Map: activate to sort column ascending">Map</th>
+                                    <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Active Date: activate to sort column ascending">Added</th></tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr *ngFor="let u of pagedOrgUsers; let i = index" role="row" [class.odd]="i%2 === false" [routerLink]="['/admin/user/'+u.id]">
+                                        <td>{{ u.id }}</td>
+                                        <td>{{ u.firstName }} {{ u.lastName }}</td>
+                                        <td>{{ u.email }}</td>
+                                        <td>{{ u.lat }}, {{ u.lng }}</td>
+                                        <td>{{ u.createDate | momentDate}}</td>
+                                    </tr>
+                                    <tr *ngIf="!orgUsers.length" class="odd empty">
+                                      <td colspan="5" class="txt-ctr">No Data</td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </div>
+                            <div *ngIf="orgUsers.length" class="row pad-0">
+                              <div class="col-xs-12 col-sm-12 col-md-5">
+                                <div class="dataTables_info" id="simpletable_info" role="status" aria-live="polite">
+                                  Showing {{ orgPagination.firstRecord }} to {{ orgPagination.lastRecord }} of {{ orgUsers.length }}
+                                </div>
+                              </div>
+                              <div *ngIf="orgPagination.totalPages && orgPagination.totalPages > 1" class="col-xs-12 col-sm-12 col-md-7">
+                                <div class="dataTables_paginate paging_simple_numbers" id="simpletable_paginate">
+                                  <ul class="orgPagination">
+                                    <li *ngIf="orgPagination.previousPage" class="paginate_button page-item previous" [class.disabled]="!orgPagination.previousPage" id="simpletable_previous">
+                                      <a aria-controls="simpletable" tabindex="0" class="page-link">Previous</a>
+                                    </li>
+                                    <li *ngIf="orgPagination.previousPage" class="paginate_button page-item active">
+                                      <a aria-controls="simpletable" tabindex="0" class="page-link">{{ orgPagination.previousPage }}</a>
+                                    </li>
+                                    <li *ngIf="orgPagination.currentPage" class="paginate_button page-item active">
+                                      <a aria-controls="simpletable" tabindex="0" class="page-link">{{ orgPagination.currentPage }}</a>
+                                    </li>
+                                    <li *ngIf="orgPagination.nextPage" class="paginate_button page-item ">
+                                      <a aria-controls="simpletable" tabindex="0" class="page-link">{{ orgPagination.nextPage }}</a>
+                                    </li>
+                                    <li class="paginate_button page-item next" [class.disabled]="!orgPagination.nextPage" id="simpletable_next">
+                                      <a href="#" aria-controls="simpletable" data-dt-idx="3" tabindex="0" class="page-link">Next</a>
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+
+              <div class="card" *ngIf="groupUsers && activeTable === 'group'">
+                <div class="card-header">
+                    <h5>{{ user.groupName }}</h5>
+                </div>
+                <div class="card-block">
+                    <div class="dt-responsive table-responsive">
+                        <div id="simpletable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+                          <div *ngIf="groupUsers.length" class="row pad-0">
+                            <div class="col-xs-12 col-sm-12 col-sm-12 col-md-6">
+                              <div class="dataTables_length form-inline tableOptions" id="simpletable_length">
+                                <label class="my-1 mr-2" for="perPage">Show</label>
+                                <select *ngIf="groupPagination && groupPagination.viewOptions.length" id="perPage" name="simpletable_length" aria-controls="simpletable" class="form-control input-sm" [(ngModel)]="groupPagination.numberPerPage" (change)="setNumberPerPage()">
+                                  <option *ngFor="let opt of groupPagination.viewOptions" [value]="opt">{{ opt }}</option>
+                                </select>
+                              </div>
+                            </div>
+                            <div class="col-xs-12 col-sm-12 col-md-6">
+                              <div id="simpletable_filter" class="dataTables_filter form-inline">
+                                <label class="sr-only" for="filter">Filter Users</label>
+                                <input #filter id="filter" type="search" class="form-control input-sm" placeholder="Any Column" aria-controls="simpletable" (keyup)="filterTable('group', $event.target.value)" [value]="groupFilter || null">
+                                <button class="btn btn-primary m-b-0" [class.disabled]="!groupFilter" (click)="filterTable('group', null)">Clear</button>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="row pad-0">
+                            <div class="col-xs-12 col-sm-12 pad-0">
+                              <table id="simpletable" class="table table-striped table-bordered nowrap dataTable" role="grid" aria-describedby="simpletable_info">
+                                <thead>
+                                <tr role="row">
+                                  <th class="sorting_asc" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Id: activate to sort column descending">ID</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Name: activate to sort column ascending">Name</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Email: activate to sort column ascending">Email</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Map: activate to sort column ascending">Map</th>
+                                  <th class="sorting" tabindex="0" aria-controls="simpletable" rowspan="1" colspan="1" aria-label="Active Date: activate to sort column ascending">Added</th></tr>
+                                </thead>
+                                <tbody>
+                                  <tr *ngFor="let u of pagedGroupUsers; let i = index" role="row" [class.odd]="i%2 === false" [routerLink]="['/admin/user/'+u.id]">
+                                      <td>{{ u.id }}</td>
+                                      <td>{{ u.firstName }} {{ u.lastName }}</td>
+                                      <td>{{ u.email }}</td>
+                                      <td>{{ u.lat }}, {{ u.lng }}</td>
+                                      <td>{{ u.createDate | momentDate}}</td>
+                                  </tr>
+                                  <tr *ngIf="!groupUsers.length" class="odd empty">
+                                    <td colspan="5" class="txt-ctr">No Data</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
+                          <div *ngIf="groupUsers.length" class="row pad-0">
+                            <div class="col-xs-12 col-sm-12 col-md-5">
+                              <div class="dataTables_info" id="simpletable_info" role="status" aria-live="polite">
+                                  Showing {{ groupPagination.firstRecord }} to {{ groupPagination.lastRecord }} of {{ groupUsers.length }}
+                              </div>
+                            </div>
+                            <div *ngIf="groupPagination.totalPages && groupPagination.totalPages > 1" class="col-xs-12 col-sm-12 col-md-7">
+                              <div class="dataTables_paginate paging_simple_numbers" id="simpletable_paginate">
+                                <ul class="groupPagination">
+                                  <li *ngIf="groupPagination.previousPage" class="paginate_button page-item previous" [class.disabled]="!groupPagination.previousPage" id="simpletable_previous">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link">Previous</a>
+                                  </li>
+                                  <li *ngIf="groupPagination.previousPage" class="paginate_button page-item active">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link">{{ groupPagination.previousPage }}</a>
+                                  </li>
+                                  <li *ngIf="groupPagination.currentPage" class="paginate_button page-item active">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link">{{ groupPagination.currentPage }}</a>
+                                  </li>
+                                  <li *ngIf="groupPagination.nextPage" class="paginate_button page-item ">
+                                    <a aria-controls="simpletable" tabindex="0" class="page-link">{{ groupPagination.nextPage }}</a>
+                                  </li>
+                                  <li class="paginate_button page-item next" [class.disabled]="!groupPagination.nextPage" id="simpletable_next">
+                                    <a href="#" aria-controls="simpletable" data-dt-idx="3" tabindex="0" class="page-link">Next</a>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- contact data table card end -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

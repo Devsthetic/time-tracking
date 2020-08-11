@@ -12,7 +12,7 @@ import { filter, map } from 'rxjs/operators';
 })
 export class DateService {
 
-  startDate: any;
+  startDate: any; 
   endDate: any;
   period: Day[];
   time: TimeEntry[];

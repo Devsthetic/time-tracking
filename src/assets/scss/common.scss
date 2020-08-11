@@ -1,119 +1,124 @@
 /* buttons */
 
 button {
-	border: 0;
+    border: 0;
 
-	&:hover {
-		cursor: pointer;
-	}
+    &:hover {
+        cursor: pointer;
+    }
 }
 
 /* Tables */
 
 table tbody tr:nth-of-type(even) {
-	background: #f8f8f8;
+    background: #f8f8f8;
 }
 
 app-table {
-	width: 100%;
-	display: block;
-	box-shadow: 0 3px 1px -2px rgba(0,0,0,.01), 0 2px 2px 0 rgba(0,0,0,.07), 0 1px 5px 0 rgba(0,0,0,.06) !important;
-	table {
-		padding: 0 24px 24px 24px;
-		tbody {
-			tr:hover {
-				background: rgba(93,135,148,.1);
-				.mat-cell.invalid {
-					background: none;
-					opacity: 1;
-				}
-				td:hover:not(.invalid) {
-					background: rgba(93,135,148,.05) !important;
-					text-shadow: 1px 1px rgba(255,255,255,0.8);
-				}
-			}
-			.mat-cell {
-				&.mat-column-actions button {
-				  color: rgba(93,135,148,0.7);
-					&.edit {
-					  color: rgba(93,135,148,0.7);
-						&:hover {
-							color: rgba(93,135,148,1);
-						}
-					}
-					&.delete {
-					  color: rgba(82,89,90,0.7);
-						&:hover {
-						  color: rgba(82,89,90,1);
-						}
-					}
-					&:disabled {
-					  color: #ccc !important;
-					}
-				}
-				&.mat-column-time span,
-				&.mat-column-code span {
-				  display: block;
-					padding: 4px 0;
-				}
-				&.mat-column-time span + span,
-				&.mat-column-code span + span {
-					border-top: 1px solid rgba(93,135,148,.1);
-				}
-				// &.mat-column-time span + span:nth-of-type(even),
-				// &.mat-column-code span + span:nth-of-type(even) {
-				// 	background: rgba(93,135,148,.05);
-				// }
-				// &.mat-column-code span + span {
-				//   margin-left: 5px;
-				// 	padding-left: 5px;
-				// 	border-left: 1px solid rgba(93,135,148,.1);
-				// }
-				&.invalid {
-				  background: #f4f5f5;
-					opacity: 0.5;
-				}
-			}
-		}
-	}
+    width: 100%;
+    display: block;
+    box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.01),
+        0 2px 2px 0 rgba(0, 0, 0, 0.07), 0 1px 5px 0 rgba(0, 0, 0, 0.06) !important;
+    table {
+        padding: 0 24px 24px 24px;
+        tbody {
+            tr:hover {
+                background: rgba(93, 135, 148, 0.1);
+                .mat-cell.invalid {
+                    background: none;
+                    opacity: 1;
+                }
+                td:hover:not(.invalid) {
+                    background: rgba(93, 135, 148, 0.05) !important;
+                    text-shadow: 1px 1px rgba(255, 255, 255, 0.8);
+                }
+            }
+            .mat-cell {
+                &.mat-column-actions button {
+                    color: rgba(93, 135, 148, 0.7);
+                    &.edit {
+                        color: rgba(93, 135, 148, 0.7);
+                        &:hover {
+                            color: rgba(93, 135, 148, 1);
+                        }
+                    }
+                    &.delete {
+                        color: rgba(82, 89, 90, 0.7);
+                        &:hover {
+                            color: rgba(82, 89, 90, 1);
+                        }
+                    }
+                    &:disabled {
+                        color: #ccc !important;
+                    }
+                }
+                &.mat-column-time span,
+                &.mat-column-code span {
+                    display: block;
+                    padding: 4px 0;
+                }
+                &.mat-column-time span + span,
+                &.mat-column-code span + span {
+                    border-top: 1px solid rgba(93, 135, 148, 0.1);
+                }
+                // &.mat-column-time span + span:nth-of-type(even),
+                // &.mat-column-code span + span:nth-of-type(even) {
+                // 	background: rgba(93,135,148,.05);
+                // }
+                // &.mat-column-code span + span {
+                //   margin-left: 5px;
+                // 	padding-left: 5px;
+                // 	border-left: 1px solid rgba(93,135,148,.1);
+                // }
+                &.invalid {
+                    background: #f4f5f5;
+                    opacity: 0.5;
+                }
+            }
+        }
+    }
 }
 
 /* Cards */
 
 .mat-card + .mat-card,
 .mat-card + app-table {
-	margin-top: 1rem !important;
+    margin-top: 1rem !important;
 }
 
 .mat-card-header {
-	position: relative;
-	.header-icon, .mat-card-title {
-		.mat-icon {
-			color: $primary;
-		}
-	}
-	.header-icon {
-		position: absolute;
-		top: 0px;
-		right: 0px;
-		.mat-icon {
-			font-size: 50px;
-			height: 50px;
-			width: 50px;
-		}
-	}
+    position: relative;
+    .header-icon,
+    .mat-card-title {
+        .mat-icon {
+            color: $primary;
+        }
+    }
+    .header-icon {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        .mat-icon {
+            font-size: 50px;
+            height: 50px;
+            width: 50px;
+        }
+    }
 }
 
 .btn-hover:hover {
-	cursor: pointer;
+    cursor: pointer;
 }
 
 .component {
-  $h: "Calc(100vh - 2rem)";
-  padding: 1rem;
-  display: block;
-  max-height: #{$h};
-  overflow-x: hidden;
-  overflow-y: auto;
-  width: 100%;
+    $h: 'Calc(100vh - 2rem)';
+    $mH: 'Calc(1rem + 75px)';
+    padding: 1rem;
+    display: block;
+    max-height: #{$h};
+    overflow: hidden;
+    width: 100%;
+    .mat-card.profile .mat-card-header {
+        min-height: #{$mH};
+    }
 }

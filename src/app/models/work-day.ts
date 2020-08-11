@@ -5,8 +5,8 @@ export interface WorkDay {
   timesheetid?: string;
   timetype?: string;
   employeeid?: string;
-  created?: Date,
-  updated?: Date,
+  created?: Date;
+  updated?: Date;
   timeid?: string;
   hours?: number;
   day?: string;

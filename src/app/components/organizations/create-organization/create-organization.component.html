@@ -1,0 +1,111 @@
+<div class="page-header card">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="icofont icofont-company bg-c-pink"></i>
+                <div class="d-inline">
+                    <h4>Add Organization</h4>
+                    <span>Enter organization information and add to map</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page body start -->
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Basic Form Inputs card start -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>Basic Information</h5>
+                    <span>* Required</span>
+                </div>
+                <div class="card-block" [formGroup]="orgForm">
+                  <div class="form-group col-md-12 row">
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="name" class="form-control" placeholder="* Name">
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="displayName" class="form-control" placeholder="Display Name">
+                      </div>
+                  </div>
+                  <div class="form-group col-md-12 row">
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" formControlName="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" formControlName="phone" class="form-control" placeholder="* Phone">
+                    </div>
+                    <div class="col-sm-4 col-md-2">
+                        <input type="text" formControlName="phoneExt" class="form-control" placeholder="Ext">
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Map Address</h5>
+                    <span>* Required</span>
+                </div>
+                <div [formGroup]="addressForm" class="card-block">
+                  <div class="form-group col-md-12 row">
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="address1" class="form-control" placeholder="* Address Line 1">
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="city" class="form-control" placeholder="* City">
+                      </div>
+                  </div>
+                  <div class="form-group col-md-12 row">
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="address2" class="form-control" placeholder="Address Line 2">
+                      </div>
+                      <div class="col-sm-6 col-md-3">
+                          <input type="text" formControlName="state" class="form-control" placeholder="* State">
+                      </div>
+                      <div class="col-sm-4 col-md-2">
+                          <input type="text" formControlName="zip" class="form-control" placeholder="* Zip">
+                      </div>
+                      <div class="col-sm-2 col-md-1">
+                          <input type="text" formControlName="zipExt" class="form-control" placeholder="Ext">
+                      </div>
+                    </div>
+                    <div class="form-group col-md-12 row">
+                        <div class="col-sm-4 col-md-2">
+                            <input type="text" formControlName="lat" class="form-control" placeholder="Latitude">
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <input type="text" formControlName="lng" class="form-control" placeholder="Longitude">
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <button type="submit" [disabled]="!addressForm.valid" [class.disabled]="!addressForm.valid" class="btn btn-primary m-b-0" (click)="mapAddress($event)">Map</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="showMap" class="card">
+              <div class="card-header">
+                  <h5>Confirm Location</h5>
+                  <span>* Alternatively, drag marker to correct position on map to confirm location</span>
+              </div>
+              <div class="card-block">
+                  <div #gmap class="set-map" style="position: relative; overflow: hidden;"></div>
+              </div>
+              <div class="card-block">
+                  <div class="text-right">
+                      <button type="button" class="btn btn-primary m-b-0" (click)="confirmAddress()">Confirm</button>
+                  </div>
+              </div>
+            </div>
+            <div class="card card-spacer">
+              <div class="text-right">
+                  <button type="button" [disabled]="!orgForm.valid" [class.disabled]="!orgForm.valid" class="btn btn-primary m-b-0" (click)="createOrg()"> Save
+                  </button>
+              </div>
+            </div>
+
+            <!-- Basic Form Inputs card end -->
+          </div>
+        </div>
+      </div>

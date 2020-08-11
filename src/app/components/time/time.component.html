@@ -1,3 +1,22 @@
-<p>
-  time works!
-</p>
+<div class="component calendar" *ngIf="period">
+    <mat-card>
+        <mat-card-header>
+
+        </mat-card-header>
+        <mat-card-content>
+            <div class="days">
+                <div *ngFor="let day of period.days" class="day" [class.today]="isToday(day,today)">
+                    <div class="name">
+                        <span>{{ day.name | day:this.ws.mobile }}</span>
+                    </div>
+                    <div class="date">
+                        <span>{{ day.day }}</span>
+                    </div>
+                    <span *ngIf="day.time.length" class="icon">
+          <mat-icon>access_time</mat-icon>
+        </span>
+                </div>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

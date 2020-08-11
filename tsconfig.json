@@ -1,34 +1,41 @@
 {
-  "compileOnSave": false,
-  "compilerOptions": {
-    "baseUrl": "./",
-    "importHelpers": true,
-    "paths": {
-      "@services/*": ["src/app/services/*"],
-      "@pipes/*": ["src/app/pipes/*"],
-      "@components/*": ["src/app/components/*"],
-      "@guards/*": ["src/app/guards/*"],
-      "@models*": ["src/app/models/"],
-      "@environments/*": ["src/environments/*"],
-      "@scss/*": ["src/assets/scss/*"],
-      "@css/*": ["src/assets/css/*"],
-      "@images/*": ["src/assets/images/*"],
-      "@utils/*": ["src/app/core/utils/*"]
-    },
-    "outDir": "./dist/out-tsc",
-    "sourceMap": true,
-    "declaration": false,
-    "module": "es2015",
-    "moduleResolution": "node",
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "target": "es5",
-    "typeRoots": [
-      "node_modules/@types"
-    ],
-    "lib": [
-      "es2017",
-      "dom"
-    ]
-  }
+    "compileOnSave": false,
+    "compilerOptions": {
+        "baseUrl": "./",
+        "importHelpers": true,
+        "paths": {
+            "@services/*": ["src/app/services/*"],
+            "@pipes/*": ["src/app/pipes/*"],
+            "@components/*": ["src/app/components/*"],
+            "@guards/*": ["src/app/guards/*"],
+            "@models*": ["src/app/models/"],
+            "@environments/*": ["src/environments/*"],
+            "@scss/*": ["src/assets/scss/*"],
+            "@css/*": ["src/assets/css/*"],
+            "@images/*": ["src/assets/images/*"],
+            "@utils*": ["src/app/core/utils/"],
+            "@sharedscss/*": ["../shared-assets/scss/*"],
+            "@sharedcss/*": ["../shared-assets/css/*"],
+            "@sharedmodule/*": ["../shared-module/*"],
+            "@javascript/*": ["src/assets/js/*"],
+            "@sharedjavascript/*": ["../shared-assets/js/*"],
+            "@sharedimages/*": ["../shared-assets/images/*"],
+            "@fonts/*": ["../shared-assets/fonts/*"],
+            "@icon/*": ["../shared-assets/icon/*"],
+            "@locales/*": ["../shared-assets/locales/*"],
+            "@pages/*": ["../shared-assets/pages/*"],
+            "@pcassets/*": ["../shared-assets/pcassets/*"],
+            "@packages/*": ["../shared-assets/packages/*"]
+        },
+        "outDir": "./dist/out-tsc",
+        "sourceMap": true,
+        "declaration": false,
+        "module": "es2015",
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "target": "es5",
+        "typeRoots": ["node_modules/@types"],
+        "lib": ["es2017", "dom"]
+    }
 }

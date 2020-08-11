@@ -1,0 +1,153 @@
+<div class="page-header card">
+    <div class="row align-items-end">
+        <div class="col-lg-8">
+            <div class="page-header-title">
+                <i class="icofont icofont-users-alt-4 bg-c-blue"></i>
+                <div class="d-inline">
+                    <h4>Add User</h4>
+                    <span>Enter user information and add user to map</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Page body start -->
+<div class="page-body">
+    <div class="row">
+        <div class="col-sm-12">
+            <!-- Basic Form Inputs card start -->
+            <div class="card">
+                <div class="card-header">
+                    <h5>Basic Information</h5>
+                    <span>* Required</span>
+                </div>
+                <div class="card-block" [formGroup]="userForm">
+                  <div class="form-group col-md-12 row">
+                      <div class="col-sm-12 col-md-4">
+                          <input type="text" formControlName="firstName" class="form-control" placeholder="* First Name">
+                      </div>
+                      <div class="col-sm-12 col-md-1">
+                          <input type="text" formControlName="middleInitial" class="form-control" placeholder="M.I.">
+                      </div>
+                      <div class="col-sm-12 col-md-4">
+                          <input type="text" formControlName="lastName" class="form-control" placeholder="* Last Name">
+                      </div>
+                  </div>
+                  <div class="form-group col-md-12 row">
+                    <div class="col-sm-4 col-md-1">
+                        <input type="text" formControlName="suffix" class="form-control" placeholder="Suffix">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" formControlName="email" class="form-control" placeholder="Email">
+                    </div>
+                    <div class="col-sm-6 col-md-3">
+                        <input type="text" formControlName="phone" class="form-control" placeholder="* Phone">
+                    </div>
+                    <div class="col-sm-4 col-md-2">
+                        <input type="text" formControlName="phoneExt" class="form-control" placeholder="Ext">
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <h5>Map Address</h5>
+                    <span>* Required</span>
+                </div>
+                <div [formGroup]="addressForm" class="card-block">
+                  <div class="form-group col-md-12 row">
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="address1" class="form-control" placeholder="* Address Line 1">
+                      </div>
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="city" class="form-control" placeholder="* City">
+                      </div>
+                  </div>
+                  <div class="form-group col-md-12 row">
+                      <div class="col-sm-12 col-md-6">
+                          <input type="text" formControlName="address2" class="form-control" placeholder="Address Line 2">
+                      </div>
+                      <div class="col-sm-6 col-md-3">
+                          <input type="text" formControlName="state" class="form-control" placeholder="* State">
+                      </div>
+                      <div class="col-sm-4 col-md-2">
+                          <input type="text" formControlName="zip" class="form-control" placeholder="* Zip">
+                      </div>
+                      <div class="col-sm-2 col-md-1">
+                          <input type="text" formControlName="zipExt" class="form-control" placeholder="Ext">
+                      </div>
+                    </div>
+                    <div class="form-group col-md-12 row">
+                        <div class="col-sm-4 col-md-2">
+                            <input type="text" formControlName="lat" class="form-control" placeholder="Latitude">
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <input type="text" formControlName="lng" class="form-control" placeholder="Longitude">
+                        </div>
+                        <div class="col-sm-4 col-md-2">
+                            <button type="submit" [disabled]="!addressForm.valid" [class.disabled]="!addressForm.valid" class="btn btn-primary m-b-0" (click)="mapAddress($event)">Map</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="showMap" class="card">
+              <div class="card-header">
+                  <h5>Confirm Location</h5>
+                  <span>* Alternatively, drag marker to correct position on map to confirm location</span>
+              </div>
+              <div class="card-block">
+                  <div #gmap class="set-map" style="position: relative; overflow: hidden;"></div>
+              </div>
+              <div class="card-block">
+                  <div class="text-right">
+                      <button type="button" class="btn btn-primary m-b-0" (click)="confirmAddress()">Confirm</button>
+                  </div>
+              </div>
+            </div>
+            <div class="card">
+                <div class="card-header row">
+                  <div class="col-lg-8">
+                    <h5>Network</h5>
+                    <span>Required to be include in Group/Organizational tables/maps</span>
+                  </div>
+                  <div class="col-lg-4">
+                      <div class="page-header-breadcrumb">
+                          <ul class="breadcrumb-title">
+                              <li class="breadcrumb-item">
+                                <a [routerLink]="['/admin/organizations/create']"><i class="icofont icofont-plus"></i> Add Organization</a>
+                              </li>
+                              <li class="breadcrumb-item">
+                                <a [routerLink]="['/admin/groups/create']"><i class="icofont icofont-plus"></i> Add Group</a>
+                              </li>
+                          </ul>
+                      </div>
+                  </div>
+                </div>
+                <div class="card-block" [formGroup]="userForm">
+                    <div class="form-group row">
+                      <div *ngIf="orgs.length" class="col-sm-12 col-md-6">
+                          <select formControlName="organizationId" class="form-control">
+                            <option *ngIf="!userForm.controls.organizationId.value" selected [value]="null">* Organization Name...</option>
+                            <option *ngFor="let o of orgs" [value]="o.id">{{ o.displayName || o.name }}</option>
+                          </select>
+                      </div>
+                      <div *ngIf="groups.length" class="col-sm-12 col-md-6">
+                          <select formControlName="groupId" class="form-control">
+                            <option *ngIf="!userForm.controls.groupId.value" selected [value]="null">Group...</option>
+                            <option *ngFor="let g of groups" [value]="g.id">{{ g.displayName || g.name }}</option>
+                          </select>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-spacer">
+              <div class="text-right">
+                  <button type="button" [disabled]="!userForm.valid" [class.disabled]="!userForm.valid" class="btn btn-primary m-b-0" (click)="createUser()"> Save
+                  </button>
+              </div>
+            </div>
+
+            <!-- Basic Form Inputs card end -->
+          </div>
+        </div>
+      </div>
