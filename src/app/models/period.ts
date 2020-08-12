@@ -1,7 +1,8 @@
 import { Day } from './day';
+import * as moment from 'moment';
 
 export interface Period {
-  startDate?: any;
-  endDate?: any;
-  days?: Day[];
+    startDate?: string | number | Date | moment.Moment;
+    endDate?: string | number | Date | moment.Moment;
+    days?: Day[];
 }

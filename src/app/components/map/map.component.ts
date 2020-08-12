@@ -37,7 +37,7 @@ export class MapComponent implements OnInit, OnDestroy {
         }
     }
 
-    closeMap() {
+    closeMap(): void {
         this.showMap = false;
     }
 

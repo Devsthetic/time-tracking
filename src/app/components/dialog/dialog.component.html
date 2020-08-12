@@ -1,9 +1,23 @@
 <!-- <app-time-entry *ngIf="data.dialogueType === 'time'"></app-time-entry> -->
 <h2 mat-dialog-title>Title</h2>
 <mat-dialog-content [class.error]="dialogError">
-    <app-time-entry [date]="this.ds.day"></app-time-entry>
+    <app-time-entry [day]="this.ds.day"></app-time-entry>
 </mat-dialog-content>
 <mat-dialog-actions>
-    <button mat-raised-button [disableRipple]="true" [disabled]="disableSubmit" color="primary">Continue</button>
-    <button mat-raised-button [disableRipple]="true" color="secondary" (click)="_dls.closeDialog({ args: { a: 0, b: 1}})">Cancel</button>
+    <button
+        mat-raised-button
+        [disableRipple]="true"
+        [disabled]="disableSubmit"
+        color="primary"
+    >
+        Continue
+    </button>
+    <button
+        mat-raised-button
+        [disableRipple]="true"
+        color="secondary"
+        (click)="_dls.closeDialog({ args: { a: 0, b: 1 } })"
+    >
+        Cancel
+    </button>
 </mat-dialog-actions>

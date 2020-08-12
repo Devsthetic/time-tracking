@@ -5,31 +5,30 @@ import { Network, SuccessResponse } from '@models';
 import { environment } from '@environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root',
 })
 export class NetworkService {
+    API_URL = environment.api + '/api/networks';
 
-  API_URL = environment.api+'/api/networks';
+    constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) {}
+    addNetworkById(network: Network): Observable<SuccessResponse> {
+        return this.http.post<SuccessResponse>(this.API_URL, network);
+    }
 
-  addNetworkById(network: Network): Observable<SuccessResponse> {
-    return this.http.post<SuccessResponse>(this.API_URL, network);
-  }
+    getNetworkByGroupId(id: any): Observable<Network> {
+        return this.http.get<Network>(this.API_URL + '/groupId/' + id);
+    }
 
-  getNetworkByGroupId(id: any): Observable<Network> {
-    return this.http.get<Network>(this.API_URL+'/groupId/'+id);
-  }
+    getNetworkByOrganizationId(id: any): Observable<Network> {
+        return this.http.get<Network>(this.API_URL + '/organizationId/' + id);
+    }
 
-  getNetworkByOrganizationId(id: any): Observable<Network> {
-    return this.http.get<Network>(this.API_URL+'/organizationId/'+id);
-  }
+    getNetworkByUserId(id: any): Observable<Network> {
+        return this.http.get<Network>(this.API_URL + '/userId/' + id);
+    }
 
-  getNetworkByUserId(id: any): Observable<Network> {
-    return this.http.get<Network>(this.API_URL+'/userId/'+id);
-  }
-
-  handleError(err: any) {
-    console.log(err)
-  }
+    handleError(err: any): void {
+        console.log(err);
+    }
 }

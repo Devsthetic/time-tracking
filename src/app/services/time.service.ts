@@ -39,8 +39,8 @@ export class TimeService {
 
     getTimeByPeriod(
         id: number,
-        startDate: string,
-        endDate: string
+        startDate: number,
+        endDate: number
     ): Observable<TimeEntry[]> {
         return this.http.get<TimeEntry[]>(
             `${environment.api}time/id/${id}/start/${startDate}/end/${endDate}`
