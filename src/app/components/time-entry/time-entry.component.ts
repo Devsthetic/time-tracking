@@ -118,7 +118,7 @@ export class TimeEntryComponent implements OnInit, OnChanges, OnDestroy {
 
     setUpTimeEntry(data: any): TimeEntry {
         return {
-            date: this.day,
+            date: this.day.dateString,
             timeCode: data.timeCode,
             hours: data.hh + data.mm / 60,
             profileId: this.user.id,
