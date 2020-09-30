@@ -1,28 +1,40 @@
 <div class="component" *ngIf="profile">
-  <mat-card class="profile">
-    <img [src]="profile.img" class="profile">
-    <mat-card-header>
-      <mat-card-title>
-        <!-- TODO: add name pipe -->
-        {{ profile.lastName }} {{ profile.suffix }}, {{ profile.firstName }}
-      </mat-card-title>
-      <mat-card-subtitle>
-        <span *ngIf="dept">
-          <ng-container *ngIf="!ws.smallScreen">Unit:</ng-container>
-          {{ dept.name }}
-        </span>
-        <!-- TODO: add phone pipe -->
-        <span *ngIf="dept">
-          <ng-container *ngIf="!ws.smallScreen">Phone:</ng-container>
-          {{ profile.phone | phone }}
-        </span>
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content class="card-read-only">
-
-    </mat-card-content>
-    <!-- <mat-card-content class="card-form">
-
-    </mat-card-content> -->
-  </mat-card>
+    <mat-card class="profile">
+        <img [src]="profile.img" class="profile" />
+        <mat-card-header>
+            <mat-card-title>
+                <!-- TODO: add name pipe -->
+                {{ profile.lastName }} {{ profile.suffix }},
+                {{ profile.firstName }}
+            </mat-card-title>
+            <mat-card-subtitle>
+                <span *ngIf="dept">
+                    <ng-container *ngIf="!ws.smallScreen">Unit:</ng-container>
+                    {{ dept.name }}
+                </span>
+                <!-- TODO: add phone pipe -->
+                <span *ngIf="dept">
+                    <ng-container *ngIf="!ws.smallScreen">Phone:</ng-container>
+                    {{ profile.phone | phone }}
+                </span>
+            </mat-card-subtitle>
+        </mat-card-header>
+        <!-- <mat-card-content class="card-read-only"> </mat-card-content> -->
+        <!-- <mat-card-content class="card-form"></mat-card-content> -->
+    </mat-card>
+    <mat-card>
+        <mat-card-content class="card-read-only">
+            <mat-tab-group>
+                <mat-tab label="Location">
+                    <app-map
+                        [lat]="dept?.lat"
+                        [lng]="dept?.lng"
+                        class="gmap"
+                    ></app-map>
+                </mat-tab>
+                <mat-tab label="Profile"> Profile </mat-tab>
+                <mat-tab label="Report"> Report </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
 </div>

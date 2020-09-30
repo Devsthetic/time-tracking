@@ -1,46 +1,85 @@
 <ng-container *ngIf="dataSource">
-  <!-- TODO: add stats and graphs views -->
-  <mat-paginator [pageSizeOptions]="[7, 14]" [hidePageSize]="ws.smallScreen"></mat-paginator>
-  <table mat-table [dataSource]="dataSource">
-    <ng-container matColumnDef="weekDay">
-      <th mat-header-cell *matHeaderCellDef> Day </th>
-      <td mat-cell *matCellDef="let day"> {{day.name | day:this.ws.mobile}} </td>
-    </ng-container>
-    <ng-container matColumnDef="date">
-      <th mat-header-cell *matHeaderCellDef> Date </th>
-      <td mat-cell *matCellDef="let day"> {{day.moment | day:this.ws.mobile:true }} </td>
-    </ng-container>
-    <ng-container matColumnDef="code">
-      <th mat-header-cell *matHeaderCellDef> Code </th>
-      <td mat-cell *matCellDef="let day" [class.invalid]="!day.edit && !day.time">
-        <ng-container *ngIf="day.time && day.time.length">
-          <span *ngFor="let entry of day.time"  class="time-code">
-          {{ entry.timeCode }}
-          </span>
+    <!-- TODO: add stats and graphs views -->
+    <table mat-table [dataSource]="dataSource">
+        <ng-container matColumnDef="weekDay">
+            <th mat-header-cell *matHeaderCellDef>Day</th>
+            <td mat-cell *matCellDef="let day">
+                {{ day.name | day: this.ws.mobile }}
+            </td>
         </ng-container>
-       </td>
-    </ng-container>
-    <ng-container matColumnDef="time">
-      <th mat-header-cell *matHeaderCellDef> Hours </th>
-      <td mat-cell *matCellDef="let day" [class.invalid]="!day.totalTime">
-        <ng-container *ngIf="day.time && day.time.length">
-          <span *ngFor="let entry of day.time"  class="time-code">
-          {{ ws.width < 500 ? entry.timeCode + ' ' + entry.hours : entry.hours }}
-          </span>
+        <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let day">
+                {{ day.moment | day: this.ws.mobile:true }}
+            </td>
         </ng-container>
-       </td>
-    </ng-container>
-    <ng-container matColumnDef="actions">
-      <th mat-header-cell *matHeaderCellDef>Actions</th>
-      <td mat-cell *matCellDef="let day">
-        <ng-container *ngIf="day.editable">
-          <button *ngIf="day.time && day.time.length" mat-icon-button matTooltip="Delete Time" [disableRipple]="true" class="delete"><mat-icon>delete</mat-icon></button>
-          <button *ngIf="day.time && day.time.length" mat-icon-button matTooltip="Modify Time" [disableRipple]="true" class="edit"><mat-icon>edit</mat-icon></button>
-          <button *ngIf="!day.time || !day.time.length" mat-icon-button matTooltip="Add Time" [disableRipple]="true" class="edit"><mat-icon>add</mat-icon></button>
+        <ng-container matColumnDef="code">
+            <th mat-header-cell *matHeaderCellDef>Code</th>
+            <td
+                mat-cell
+                *matCellDef="let day"
+                [class.invalid]="!day.edit && !day.time"
+            >
+                <ng-container *ngIf="day.time && day.time.length">
+                    <span *ngFor="let entry of day.time" class="time-code">
+                        {{ entry.timeCode }}
+                    </span>
+                </ng-container>
+            </td>
         </ng-container>
-      </td>
-    </ng-container>
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  </table>
+        <ng-container matColumnDef="time">
+            <th mat-header-cell *matHeaderCellDef>Hours</th>
+            <td mat-cell *matCellDef="let day" [class.invalid]="!day.totalTime">
+                <ng-container *ngIf="day.time && day.time.length">
+                    <span *ngFor="let entry of day.time" class="time-code">
+                        {{
+                            ws.width < 500
+                                ? entry.timeCode + ' ' + entry.hours
+                                : entry.hours
+                        }}
+                    </span>
+                </ng-container>
+            </td>
+        </ng-container>
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef>Actions</th>
+            <td mat-cell *matCellDef="let day">
+                <ng-container *ngIf="day.editable">
+                    <button
+                        *ngIf="day.time && day.time.length"
+                        mat-icon-button
+                        matTooltip="Delete Time"
+                        [disableRipple]="true"
+                        class="delete"
+                    >
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button
+                        *ngIf="day.time && day.time.length"
+                        mat-icon-button
+                        matTooltip="Modify Time"
+                        [disableRipple]="true"
+                        class="edit"
+                    >
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                    <button
+                        *ngIf="!day.time || !day.time.length"
+                        mat-icon-button
+                        matTooltip="Add Time"
+                        [disableRipple]="true"
+                        class="edit"
+                    >
+                        <mat-icon>add</mat-icon>
+                    </button>
+                </ng-container>
+            </td>
+        </ng-container>
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+    <mat-paginator
+        [pageSizeOptions]="[7, 14]"
+        [hidePageSize]="ws.smallScreen"
+    ></mat-paginator>
 </ng-container>

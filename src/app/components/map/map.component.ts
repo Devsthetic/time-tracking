@@ -1,22 +1,23 @@
 /// <reference types="@types/googlemaps" />
-import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import {
-    FormGroup,
-    FormControl,
-    Validators,
-    ValidatorFn,
-} from '@angular/forms';
-import { Observable, Subscription, timer } from 'rxjs';
-import { Organization, ErrorResponse, User } from '@models';
-import { GeoLocationService } from '@services/geo-location.service';
+    Component,
+    OnInit,
+    OnDestroy,
+    ViewChild,
+    Input,
+    ElementRef,
+    SimpleChanges,
+    OnChanges,
+} from '@angular/core';
+import { timer } from 'rxjs';
 
 @Component({
     selector: 'app-map',
     templateUrl: './map.component.html',
     styleUrls: ['./map.component.css'],
 })
-export class MapComponent implements OnInit, OnDestroy {
-    @ViewChild('gmap') gmapElement: any;
+export class MapComponent implements OnInit, OnChanges, OnDestroy {
+    @ViewChild('gmap') gmapElement: ElementRef;
     @Input() lat: string;
     @Input() lng: string;
 
@@ -24,10 +25,16 @@ export class MapComponent implements OnInit, OnDestroy {
     marker: google.maps.Marker;
     showMap: boolean;
 
-    constructor() {}
-
     ngOnInit(): void {
-        this.viewMap(Number(this.lat), Number(this.lng));
+        this.viewMap();
+    }
+
+    ngOnChanges(changes: SimpleChanges): void {
+        if (changes['lat'] && changes['lng']) {
+            if (changes['lat'].currentValue && changes['lng'].currentValue) {
+                this.viewMap();
+            }
+        }
     }
 
     ngOnDestroy(): void {
@@ -37,28 +44,38 @@ export class MapComponent implements OnInit, OnDestroy {
         }
     }
 
-    closeMap() {
+    closeMap(): void {
         this.showMap = false;
     }
 
-    viewMap(lat: number, lng: number): void {
-        this.showMap = true;
-        timer(500).subscribe(() => {
-            console.log(this.gmapElement);
-            if (this.gmapElement) {
-                this.map = new google.maps.Map(this.gmapElement.nativeElement, {
-                    center: new google.maps.LatLng(lat, lng),
-                    zoom: 14,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP,
-                    disableDefaultUI: true,
-                    gestureHandling: 'greedy',
-                });
-                this.marker = new google.maps.Marker({
-                    position: new google.maps.LatLng(lat, lng),
-                    draggable: true,
-                    map: this.map,
-                });
-            }
-        });
+    viewMap(): void {
+        if (this.lat && this.lng) {
+            timer(500).subscribe(() => {
+                if (this.gmapElement) {
+                    this.map = new google.maps.Map(
+                        this.gmapElement.nativeElement,
+                        {
+                            center: new google.maps.LatLng(
+                                Number(this.lat),
+                                Number(this.lng)
+                            ),
+                            zoom: 14,
+                            mapTypeId: google.maps.MapTypeId.ROADMAP,
+                            disableDefaultUI: false,
+                            gestureHandling: 'greedy',
+                        }
+                    );
+                    this.marker = new google.maps.Marker({
+                        position: new google.maps.LatLng(
+                            Number(this.lat),
+                            Number(this.lng)
+                        ),
+                        draggable: true,
+                        map: this.map,
+                    });
+                    this.showMap = true;
+                }
+            });
+        }
     }
 }

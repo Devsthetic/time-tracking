@@ -1,10 +1,40 @@
-<div *ngIf="timeForm && date" [formGroup]="timeForm" class="dialog-form">
-    <mat-form-field formControlName="hh" class="dialog-compact" ngDefaultControl>
-        <input matInput placeholder="HH" [value]="timeForm.controls.hh.value">
+<div *ngIf="timeForm && day" [formGroup]="timeForm" class="dialog-form">
+    <mat-form-field
+        formControlName="hh"
+        class="dialog-compact"
+        ngDefaultControl
+    >
+        <input
+            matInput
+            placeholder="HH"
+            [value]="timeForm.controls.hh.value"
+            [disabled]="timeForm.controls.hh.disabled"
+        />
         <mat-error *ngIf="timeForm.controls['hh'].invalid">Error</mat-error>
     </mat-form-field>
-    <mat-form-field formControlName="mm" class="dialog-compact" ngDefaultControl>
-        <input matInput placeholder="MM" [value]="timeForm.controls.mm.value">
+    <mat-form-field
+        formControlName="mm"
+        class="dialog-compact"
+        ngDefaultControl
+    >
+        <input
+            matInput
+            placeholder="MM"
+            [value]="timeForm.controls.mm.value"
+            [disabled]="timeForm.controls.mm.disabled"
+        />
         <mat-error *ngIf="timeForm.controls['mm'].invalid">Error</mat-error>
+    </mat-form-field>
+    <mat-form-field
+        formControlName="timeCode"
+        class="dialog-compact"
+        ngDefaultControl
+    >
+        <mat-label>SELECT</mat-label>
+        <mat-select [disabled]="timeForm.controls.timeCode.disabled">
+            <mat-option *ngFor="let code of codes" [value]="code.id">
+                {{ code.name }}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
 </div>

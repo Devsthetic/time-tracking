@@ -1,34 +1,50 @@
-<div class="component calendar" *ngIf="month || days">
+<div class="component calendar" *ngIf="month">
     <mat-card>
         <mat-card-header>
             <div class="month">
                 <h1>
-                    <button mat-icon-buttom color="primary" (click)="getLastMonth()">
-            <mat-icon>chevron_left</mat-icon>
-          </button>
-                    <!-- <input matInput [matDatepicker]="myDatepicker"class="hidden"> -->
+                    <button
+                        mat-icon-buttom
+                        color="primary"
+                        (click)="getLastMonth()"
+                    >
+                        <mat-icon>chevron_left</mat-icon>
+                    </button>
                     {{ month.name }} {{ month.year }}
-                    <mat-icon *ngIf="!isThisMonth()" (click)="getThisMonth()" class="this-month">today</mat-icon>
-                    <!-- <mat-datepicker-toggle [for]="myDatepicker"></mat-datepicker-toggle>
-          <mat-datepicker #myDatepicker [touchUi]="ws.touchDevice" ></mat-datepicker> -->
-                    <button mat-icon-buttom color="primary" (click)="getNextMonth()">
-            <mat-icon>chevron_right</mat-icon>
-          </button>
+                    <mat-icon
+                        *ngIf="!isThisMonth()"
+                        (click)="getThisMonth()"
+                        class="this-month"
+                        >today</mat-icon
+                    >
+                    <button
+                        mat-icon-buttom
+                        color="primary"
+                        (click)="getNextMonth()"
+                    >
+                        <mat-icon>chevron_right</mat-icon>
+                    </button>
                 </h1>
             </div>
         </mat-card-header>
         <mat-card-content>
             <div class="days">
-                <div *ngFor="let day of month.days" class="day" [class.today]="isToday(day,today)" [class.disabled]="day.month !== month.id" (click)="day.month === month.id ? setActiveDay(day) : null">
+                <div
+                    *ngFor="let day of month.days"
+                    class="day"
+                    [class.today]="isToday(day, today)"
+                    [class.disabled]="day.month !== month.id"
+                    (click)="setActiveDay(day)"
+                >
                     <div class="name">
-                        <span>{{ day.name | day:this.ws.mobile }}</span>
+                        <span>{{ day.name | day: this.ws.mobile }}</span>
                     </div>
                     <div class="date">
                         <span>{{ day.day }}</span>
                     </div>
                     <span *ngIf="day.time.length" class="icon">
-            <mat-icon>access_time</mat-icon>
-          </span>
+                        <mat-icon>access_time</mat-icon>
+                    </span>
                 </div>
             </div>
         </mat-card-content>

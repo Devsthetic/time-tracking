@@ -10,22 +10,22 @@ import { TableComponent } from '@components/table/table.component';
 import { DialogComponent } from '@components/dialog/dialog.component';
 import { TimeEntryComponent } from '@components/time-entry/time-entry.component';
 import { TimeComponent } from '@components/time/time.component';
+import { MapComponent } from '@components/map/map.component';
 
 export const AppDeclarations: any[] = [
-  AppComponent,
-  LoginComponent,
-  NavigationComponent,
-  CalendarComponent,
-  ProfileComponent,
-  ReportComponent,
-  DayPipe,
-  MenuComponent,
-  TableComponent,
-  DialogComponent,
-  TimeEntryComponent,
-  TimeComponent
+    AppComponent,
+    LoginComponent,
+    NavigationComponent,
+    CalendarComponent,
+    ProfileComponent,
+    ReportComponent,
+    DayPipe,
+    MenuComponent,
+    TableComponent,
+    DialogComponent,
+    TimeEntryComponent,
+    TimeComponent,
+    MapComponent,
 ];
 
-export const EntryComponents: any[] = [
-  DialogComponent
-];
+export const EntryComponents: any[] = [DialogComponent];
