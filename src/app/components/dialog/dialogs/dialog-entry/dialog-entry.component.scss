@@ -1,0 +1,42 @@
+@import '../../../../../assets/scss/variables.scss';
+
+table {
+    width: 100%;
+    th,
+    td {
+        padding: 3px;
+        text-align: center;
+        &.txt-left {
+            text-align: left;
+            span {
+                min-width: 25%;
+                color: $primary;
+                font-weight: 700;
+                display: inline-block;
+                text-transform: uppercase;
+                margin-left: 12px;
+            }
+        }
+    }
+    thead {
+        color: $primary;
+        background: $offWhite;
+    }
+    tbody {
+        tr:nth-of-type(even) {
+            background: $offWhite;
+        }
+        td {
+            &.time:first-of-type {
+                border-left: 1px solid $offWhite;
+            }
+            &.time {
+                border-right: 1px solid $offWhite;
+            }
+            &.total {
+                font-size: 3rem;
+                text-shadow: 5px 5px $offWhite;
+            }
+        }
+    }
+}

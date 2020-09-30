@@ -1,18 +1,16 @@
-
-
 .mat-card.profile {
-  img.profile {
-    position: absolute;
-    top: 24px;
-    left: 24px;
-    width: 75px;
-    height: 75px;
-    max-width: 75px;
-    max-height: 75px;
-    border-radius: 37.5px;
-  }
-  .mat-card-header {
-    display: block;
-    padding-left: 100px;
-  }
+    img.profile {
+        position: absolute;
+        top: 24px;
+        left: 24px;
+        width: 75px;
+        height: 75px;
+        max-width: 75px;
+        max-height: 75px;
+        border-radius: 37.5px;
+    }
+    .mat-card-header {
+        display: block;
+        padding-left: 100px;
+    }
 }

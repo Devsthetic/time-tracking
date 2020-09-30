@@ -2,6 +2,7 @@ export { Address } from './address';
 export { Day } from './day';
 export { DateSelection } from './date-selection';
 export { Department } from './department';
+export { DialogEnum } from './dialog';
 export { ErrorResponse } from './error-response';
 export { GeoLocations, GeoAddressLocation } from './geo-location';
 export { Group } from './group';

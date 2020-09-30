@@ -81,5 +81,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
     getData(): void {
         this.getDepartment();
         this.getManager();
+        console.log(this);
     }
 }

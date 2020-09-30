@@ -188,6 +188,8 @@ export class TableComponent
     setPeriod(period: Period): void {
         this.period = period;
         this.dataSource = new MatTableDataSource(this.period.days);
+        console.log(period);
+        console.log(this.dataSource);
         this.cdr.detectChanges();
         this.dataSource.paginator = this.paginator;
     }

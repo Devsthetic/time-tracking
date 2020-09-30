@@ -3,7 +3,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { DialogService } from '@services/dialog.service';
 import { WindowService } from '@services/window.service';
 import { Subscription } from 'rxjs';
-import { TimeEntryComponent } from '@components/time-entry/time-entry.component';
 import { DateService } from '@services/date.service';
 
 @Component({
@@ -12,14 +11,14 @@ import { DateService } from '@services/date.service';
     styleUrls: ['./dialog.component.scss'],
 })
 export class DialogComponent implements OnInit, OnDestroy {
-    data: any;
+    data: typeof MAT_DIALOG_DATA;
     disableSubmit: boolean;
     dialogError: boolean;
     subs: Subscription[] = [];
 
     constructor(
         private dialogRef: MatDialogRef<DialogComponent>,
-        @Inject(MAT_DIALOG_DATA) data,
+        @Inject(MAT_DIALOG_DATA) data: typeof MAT_DIALOG_DATA,
         public _dls: DialogService,
         public ds: DateService,
         public ws: WindowService
@@ -49,8 +48,8 @@ export class DialogComponent implements OnInit, OnDestroy {
         this.subs.forEach(s => s.unsubscribe());
     }
 
-    continue(continueAction: boolean, args?: any): void {
-        const data: any = args
+    continue(continueAction: boolean, args?: Record<string, unknown>): void {
+        const data: Record<string, unknown> = args
             ? Object.assign({}, { continue: continueAction }, args)
             : { continue: continueAction };
         this.dialogRef.close(data);

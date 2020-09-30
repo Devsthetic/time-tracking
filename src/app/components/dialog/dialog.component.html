@@ -1,9 +1,25 @@
-<!-- <app-time-entry *ngIf="data.dialogueType === 'time'"></app-time-entry> -->
-<h2 mat-dialog-title>Title</h2>
-<mat-dialog-content [class.error]="dialogError">
-    <app-time-entry [day]="this.ds.day"></app-time-entry>
-</mat-dialog-content>
-<mat-dialog-actions>
+<button
+    class="close-dialog"
+    mat-flat-button
+    (click)="_dls.closeDialog({ args: { a: 0, b: 1 } })"
+>
+    X
+</button>
+<ng-container *ngIf="data.dialogType === 'day'">
+    <app-dialog-entry [day]="this.ds.day"></app-dialog-entry>
+</ng-container>
+<!-- <h2 mat-dialog-title>Title</h2> -->
+<!-- <mat-dialog-content [class.error]="dialogError"> -->
+<!-- <ng-container *ngIf="data.dialogType === 'day'">
+        <app-time-entry
+            *ngFor="let time of this.ds.day.time"
+            [day]="this.ds.day"
+            [entry]="time"
+            [readOnly]="true"
+        ></app-time-entry>
+    </ng-container> -->
+<!-- </mat-dialog-content> -->
+<!-- <mat-dialog-actions>
     <button
         mat-raised-button
         [disableRipple]="true"
@@ -20,4 +36,4 @@
     >
         Cancel
     </button>
-</mat-dialog-actions>
+</mat-dialog-actions> -->

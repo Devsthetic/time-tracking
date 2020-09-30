@@ -6,9 +6,10 @@ export interface TimeEntry {
     timeCode?: string;
     hours?: number;
     profileId?: number;
-    createdDate?: string;
-    updateDate?: string;
-    updaterId?: number;
+    createdOn?: string;
+    createdBy?: number;
+    updatedOn?: string;
+    updatedBy?: number;
     editable?: boolean;
     notes?: string;
 }

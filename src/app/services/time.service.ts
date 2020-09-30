@@ -9,8 +9,11 @@ import { environment } from '@environments/environment';
 })
 export class TimeService {
     /* TODO: split non-time crud operations to new service */
+    codes: TimeCode[];
 
-    constructor(private http: HttpClient) {}
+    constructor(private http: HttpClient) {
+        this.getTimeCodes().subscribe(codes => (this.codes = codes));
+    }
 
     getAllTime(id: number): Observable<TimeEntry[]> {
         return this.http.get<TimeEntry[]>(`${environment.api}time/id/${id}`);

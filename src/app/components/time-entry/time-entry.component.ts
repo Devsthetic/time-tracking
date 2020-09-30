@@ -11,9 +11,14 @@ import { DateService } from '@services/date.service';
 import { AuthService } from '@services/auth.service';
 import { WindowService } from '@services/window.service';
 import { Subscription } from 'rxjs';
-import { Day, Profile, TimeEntry } from '@models';
+import { Day, Profile, TimeEntry, TimeCode } from '@models';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
+export interface TimeEntryData {
+    hh?: number;
+    mm?: number;
+    timeCode?: string;
+}
 @Component({
     selector: 'app-time-entry',
     templateUrl: './time-entry.component.html',
@@ -21,29 +26,31 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 })
 export class TimeEntryComponent implements OnInit, OnChanges, OnDestroy {
     @Input() day: Day;
+    @Input() readOnly: boolean;
+    @Input() entry: TimeEntry;
     timeForm: FormGroup;
     subs: Subscription[] = [];
     user: Profile;
-    entry: TimeEntry;
     err: boolean;
+    codes: TimeCode[];
 
     constructor(
         private _ts: TimeService,
         private _as: AuthService,
         private _ds: DateService,
         public ws: WindowService
-    ) {}
+    ) {
+        console.log(this);
+    }
 
     ngOnInit(): void {
         this.user = this._as.getUser();
+        this.codes = this._ts.codes;
         this.setupForm();
     }
 
     ngOnChanges(changes: SimpleChanges): void {
-        if (
-            changes['day'].currentValue &&
-            changes['day'].currentValue !== changes['day'].previousValue
-        ) {
+        if (changes['day']?.currentValue !== changes['day']?.previousValue) {
             console.log(this.day);
             this.populateForm();
         }
@@ -55,10 +62,12 @@ export class TimeEntryComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     populateForm(): void {
-        if (this.day && this.day.totalTime && this.timeForm) {
-            const timeArr = this.day.totalTime.toString().split('.');
+        if (this.entry && this.timeForm) {
+            const timeArr = this.entry.hours.toString().split('.');
             const hhControl = this.timeForm.get('hh');
+            const codeControl = this.timeForm.get('timeCode');
             hhControl.patchValue(parseInt(timeArr[0], 10));
+            codeControl.patchValue(this.entry.timeCode);
             if (timeArr[1]) {
                 const mmControl = this.timeForm.get('mm');
                 mmControl.patchValue(
@@ -73,23 +82,26 @@ export class TimeEntryComponent implements OnInit, OnChanges, OnDestroy {
             res => {
                 console.log(res);
             },
-            err => (this.err = true)
+            err => {
+                console.log(err);
+                this.err = true;
+            }
         );
     }
 
     setupForm(): void {
         this.timeForm = new FormGroup({
-            hh: new FormControl(null, [
+            hh: new FormControl({ value: null, disabled: true }, [
                 Validators.minLength(1),
                 Validators.maxLength(2),
                 Validators.pattern(/[0-9]/),
             ]),
-            mm: new FormControl(null, [
+            mm: new FormControl({ value: null, disabled: true }, [
                 Validators.minLength(1),
                 Validators.maxLength(2),
                 Validators.pattern(/[0-9]/),
             ]),
-            timeCode: new FormControl(null, [
+            timeCode: new FormControl({ value: null, disabled: true }, [
                 Validators.required,
                 Validators.maxLength(3),
                 Validators.minLength(3),
@@ -116,13 +128,13 @@ export class TimeEntryComponent implements OnInit, OnChanges, OnDestroy {
         this.timeForm.patchValue({ hh: hh, mm: mm, timeCode: res.timeCode });
     }
 
-    setUpTimeEntry(data: any): TimeEntry {
+    setUpTimeEntry(data: TimeEntryData): TimeEntry {
         return {
             date: this.day.dateString,
             timeCode: data.timeCode,
             hours: data.hh + data.mm / 60,
             profileId: this.user.id,
-            updaterId: this.user.id,
+            updatedBy: this.user.id,
         };
     }
 }

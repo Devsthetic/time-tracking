@@ -34,7 +34,7 @@
                     class="day"
                     [class.today]="isToday(day, today)"
                     [class.disabled]="day.month !== month.id"
-                    (click)="day.month === month.id ? setActiveDay(day) : null"
+                    (click)="setActiveDay(day)"
                 >
                     <div class="name">
                         <span>{{ day.name | day: this.ws.mobile }}</span>

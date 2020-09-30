@@ -9,7 +9,7 @@ export function filterObjectArray(
 ): any[] {
     console.log(objArray);
     console.log(term);
-    let arr: any[] = [];
+    const arr: any[] = [];
     if (term) {
         objArray.forEach(obj => {
             let found = false;
@@ -134,4 +134,13 @@ export function isToday(obj1: any, obj2: any): boolean {
         obj1.year === obj2.year &&
         obj1.month === obj2.month
     );
+}
+
+export function getSortedDate(dates: string[], oldest: boolean): string {
+    const ds = dates
+        .map(d => moment(d).valueOf())
+        .sort((a, b) => (a > b ? 1 : -1));
+    return !dates.length
+        ? null
+        : moment(oldest ? ds[0] : ds[ds.length - 1]).toISOString();
 }

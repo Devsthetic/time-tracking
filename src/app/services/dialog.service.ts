@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject } from 'rxjs';
 
 @Injectable({
     providedIn: 'root',
@@ -20,11 +20,11 @@ export class DialogService {
         console.log('dls service start');
     }
 
-    closeDialog(data: any): void {
+    closeDialog(data: boolean): void {
         this.close.next(data);
     }
 
-    continue(args: any): void {
+    continue(args: Record<string, unknown>): void {
         this.confirm.next(args);
     }
 
@@ -33,11 +33,11 @@ export class DialogService {
         this.open.next(type);
     }
 
-    setError(error: boolean) {
+    setError(error: boolean): void {
         this.dialogError.next(error);
     }
 
-    setDisableSubmit(disable: boolean) {
+    setDisableSubmit(disable: boolean): void {
         this.disableSubmit.next(disable);
     }
 }

@@ -48,9 +48,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     ngOnInit(): void {
         this._subs.push(this.ds.open$.subscribe(type => this.openDialog(type)));
-        this._subs.push(
-            this.ds.close$.subscribe(data => this.closeDialog(data))
-        );
+        this._subs.push(this.ds.close$.subscribe(() => this.closeDialog()));
     }
 
     ngOnDestroy(): void {
@@ -73,7 +71,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this._authCheck = true;
     }
 
-    closeDialog(data: any): void {
+    closeDialog(): void {
         this.dialog.closeAll();
     }
 
@@ -85,7 +83,7 @@ export class AppComponent implements OnInit, OnDestroy {
         dialogConfig.autoFocus = true;
         dialogConfig.closeOnNavigation = false;
         dialogConfig.data = {
-            dialogueType: type,
+            dialogType: type,
         };
 
         if (this.ws.width > 720) {

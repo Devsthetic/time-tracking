@@ -5,7 +5,7 @@ import { AuthService } from '@services/auth.service';
 import { WindowService } from '@services/window.service';
 import { DialogService } from '@services/dialog.service';
 import { Subscription } from 'rxjs';
-import { Month, Day, Profile } from '@models';
+import { Month, Day, Profile, DialogEnum } from '@models';
 import * as moment from 'moment';
 
 @Component({
@@ -101,7 +101,13 @@ export class CalendarComponent implements OnDestroy {
     }
 
     setActiveDay(day: Day): void {
-        this.ds.setActiveDay(day);
-        this.dls.openDialog('day');
+        const isThisMonth = day.month === this.month.id;
+        const showTime = day.totalTime;
+        if (isThisMonth) {
+            this.ds.setActiveDay(day);
+        }
+        if (showTime) {
+            this.dls.openDialog(DialogEnum.Day);
+        }
     }
 }

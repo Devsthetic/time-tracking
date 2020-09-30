@@ -13,4 +13,6 @@ export interface Day {
     time?: TimeEntry[];
     totalTime?: number;
     editable?: boolean;
+    createdOn?: string;
+    updatedOn?: string;
 }
