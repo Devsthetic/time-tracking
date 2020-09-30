@@ -39,12 +39,16 @@
 
                 <tr>
                     <td [attr.colspan]="data.length" class="txt-left">
-                        <span>Created:</span> {{ day.createdOn | dateTime }}
+                        <span>Created:</span>
+                        {{ day.createdOn | dateTime: 'MM/DD/YYYY' }}
+                        {{ day.createdOn | dateTime: 'hh:mm A' }}
                     </td>
                 </tr>
                 <tr>
                     <td [attr.colspan]="data.length" class="txt-left">
-                        <span>Updated:</span>{{ day.updatedOn | dateTime }}
+                        <span>Updated:</span>
+                        {{ day.updatedOn | dateTime: 'MM/DD/YYYY' }}
+                        {{ day.updatedOn | dateTime: 'hh:mm A' }}
                     </td>
                 </tr>
             </tbody>
