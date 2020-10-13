@@ -22,7 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
         private as: AuthService,
         private rt: Router,
         private ds: DialogService,
-        private ws: WindowService,
+        public ws: WindowService,
         public dialog: MatDialog
     ) {
         this._subs = [];

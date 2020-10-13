@@ -68,7 +68,7 @@ export class UsersComponent implements OnInit, OnDestroy {
         );
     }
 
-    pageTable(args: any): void {
+    pageTable(args: Pagination): void {
         this.pagination = Object.assign({}, this.pagination, args);
         console.log(this.pagination);
         this.pagination = setPaging(this.users.length, this.pagination);
@@ -87,7 +87,9 @@ export class UsersComponent implements OnInit, OnDestroy {
 
     setSort(col: string, dir?: string): void {
         this.sort.col = col;
-        if (dir) this.sort.dir = dir;
+        if (dir) {
+            this.sort.dir = dir;
+        }
         this.pagedUsers = sortTable(this.pagedUsers, this.sort);
     }
 

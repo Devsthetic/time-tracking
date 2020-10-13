@@ -1,11 +1,6 @@
-import { Component, OnInit, OnDestroy, Output } from '@angular/core';
-import {
-    FormGroup,
-    FormControl,
-    Validators,
-    ValidatorFn,
-} from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { AuthService } from '@services/auth.service';
 import { Router } from '@angular/router';
 

@@ -15,5 +15,5 @@ export interface Profile {
     profile?: string;
     gender?: string;
     role?: string;
-    img?: any;
+    img?: string | ArrayBuffer | Blob;
 }

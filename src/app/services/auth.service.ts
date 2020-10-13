@@ -27,33 +27,33 @@ export class AuthService {
         return !!localStorage.getItem('usr');
     }
 
-    convertBlobToImage(img: Blob): void {
-        const reader = new FileReader();
-        reader.addEventListener(
-            'load',
-            () => {
-                this.profile.img = reader.result;
-                this.authSub.next(this.profile);
-            },
-            false
-        );
-        reader.readAsDataURL(img);
-    }
+    // convertBlobToImage(img: Blob): void {
+    //     const reader = new FileReader();
+    //     reader.addEventListener(
+    //         'load',
+    //         () => {
+    //             this.profile.img = reader.result;
+    //             this.authSub.next(this.profile);
+    //         },
+    //         false
+    //     );
+    //     reader.readAsDataURL(img);
+    // }
 
     getProfile(userId: number): Observable<Profile> {
         return this.http.get<Profile>(`${environment.api}users/id/${userId}`);
     }
 
-    getProfileImage(id: number): void {
-        this.http.get<Blob>(`${environment.api}users/img/id/${id}`).subscribe(
-            file => {
-                this.convertBlobToImage(file);
-            },
-            err => {
-                console.log(err);
-            }
-        );
-    }
+    // getProfileImage(id: number): void {
+    //     this.http.get<Blob>(`${environment.api}users/img/id/${id}`).subscribe(
+    //         file => {
+    //             this.convertBlobToImage(file);
+    //         },
+    //         err => {
+    //             console.log(err);
+    //         }
+    //     );
+    // }
 
     getUser(): Profile {
         return this.profile;
@@ -74,7 +74,7 @@ export class AuthService {
             .subscribe(
                 profile => {
                     this.profile = profile;
-                    this.getProfileImage(this.profile.id);
+                    // this.getProfileImage(this.profile.id);
                     localStorage.setItem(
                         'usr',
                         JSON.stringify({
@@ -97,6 +97,8 @@ export class AuthService {
 
     logout(): void {
         localStorage.clear();
+        this.profile = null;
+        this.authSub.next(this.profile);
         this.rt.navigate(['/']);
     }
 }

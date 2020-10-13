@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, Subscription, Subject } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable } from 'rxjs';
 import { LocationCriteria, Organization } from '@models';
 import { environment } from '@environments/environment';
 
@@ -16,7 +16,7 @@ export class OrganizationService {
         return this.http.post<Organization>(this.API_URL, org);
     }
 
-    getOrganizationById(id: any): Observable<Organization> {
+    getOrganizationById(id: number): Observable<Organization> {
         return this.http.get<Organization>(this.API_URL + '/' + id);
     }
 
@@ -33,7 +33,7 @@ export class OrganizationService {
         );
     }
 
-    handleError(err: any): void {
+    handleError(err: HttpErrorResponse): void {
         console.log(err);
     }
 }
