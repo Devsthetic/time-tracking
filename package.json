@@ -30,7 +30,7 @@
     "moment": "^2.27.0",
     "moment-timezone": "^0.5.31",
     "ng-recaptcha": "^4.3.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "popper.js": "^1.16.1",
     "rxjs": "^6.6.2",
     "tslib": "^2.0.0",
