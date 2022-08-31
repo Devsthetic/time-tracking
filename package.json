@@ -28,7 +28,7 @@
     "crypto-js": "^3.3.0",
     "jquery": "^3.5.1",
     "moment": "^2.27.0",
-    "moment-timezone": "^0.5.31",
+    "moment-timezone": "^0.5.35",
     "ng-recaptcha": "^4.3.0",
     "node-sass": "^4.14.1",
     "popper.js": "^1.16.1",
